@@ -1,0 +1,26 @@
+<html>
+  <head></head>
+  <body>
+    <canvas id="canvas" width="400" height="400">
+      此浏览器不支持canvas
+    </canvas>
+  </body>
+</html>
+
+<script>
+  const ctx = document.getElementById('canvas');
+
+  // canvas 2d
+  // const c = ctx.getContext('2d');
+  // c.fillStyle = 'red';
+  // c.fillRect(10, 10, 100, 100);
+
+  // webgl 1.0
+  const gl = ctx.getContext('webgl');
+
+  gl.clearColor(0.5, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  console.log(gl.getParameter(gl.COLOR_CLEAR_VALUE));
+
+</script>
