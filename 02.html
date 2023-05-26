@@ -1,9 +1,12 @@
 <html>
-  <head></head>
+  <head>
+    <script src="./utils.js"></script>
+  </head>
   <body>
     <canvas id="canvas" width="400" height="400">
       此浏览器不支持canvas
     </canvas>
+    <!-- <div style="background-color: red; width: 100px; height: 100px;"></div> -->
   </body>
 </html>
 
@@ -19,10 +22,10 @@
   // webgl 1.0 改变画布颜色
   const gl = ctx.getContext('webgl');
 
-  gl.clearColor(0.5, 0, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  // gl.clearColor(0.5, 0, 0, 1);
+  // gl.clear(gl.COLOR_BUFFER_BIT);
 
-  console.log(gl.getParameter(gl.COLOR_CLEAR_VALUE));
+  // console.log(gl.getParameter(gl.COLOR_CLEAR_VALUE));
 
   // 着色器 shader
   // vec4(x,y,z,w) (x/w,y/w,z/w) w 齐次坐标
@@ -31,20 +34,18 @@
       gl_Position = vec4(0.0,0.0,0.0,1.0);
       gl_PointSize = 10.0;
     }
-  `; // 定点着色器
+  `; // 顶点着色器
 
   const FRAGMENT_SHADER_SOURCE = `
     void main() {
       gl_FragColor = vec4(1.0,0.0,0.0,1.0);
-      gl_PointSize = 10.0;
     }
   `; // 片元着色器
 
-  const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-  const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
 
-  gl.shaderSource(vertexShader, VERTEX_SHADER_SOURCE);
-  gl.shaderSource(fragmentShader, FRAGMENT_SHADER_SOURCE);
-
-  // gl.compileShader();
+  // 绘制图形 起点 使用几个顶点
+  gl.drawArrays(gl.POINTS, 0, 1);
+  // gl.drawArrays(gl.LINES, 0, 2);
+  // gl.drawArrays(gl.TRIANGLES, 0, 3);
 </script>
