@@ -67,14 +67,18 @@
   `; // 顶点着色器
 
   const FRAGMENT_SHADER_SOURCE = `
+    precision mediump float;
+    uniform vec2 uColor;
     void main() {
-      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+      gl_FragColor = vec4(uColor.r, uColor.g, 0.0, 1.0);
     }
   `; // 片元着色器
 
   const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
 
   const aPosition = gl.getAttribLocation(program, 'aPosition');
+
+  const uColor = gl.getUniformLocation(program, 'uColor');
   
   // 绘制图形 起点 使用几个顶点
   // gl.drawArrays(gl.LINES, 0, 2);
@@ -113,6 +117,7 @@
 
     points.forEach((item) => {
       gl.vertexAttrib2f(aPosition, item.clickX, item.clickY);
+      gl.uniform2f(uColor, item.clickX, item.clickY);
       gl.drawArrays(gl.POINTS, 0, 1);
     });
   };
