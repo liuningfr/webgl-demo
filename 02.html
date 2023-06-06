@@ -94,32 +94,51 @@
   //   gl.drawArrays(gl.POINTS, 0, 1);
   // }, 500);
 
-  const points = [];
+  // 根据鼠标事件绘制顶点
+  // const points = [];
 
-  ctx.onclick = (e) => {
-    // 获取点击坐标
-    const x = e.clientX;
-    const y = e.clientY;
-    const domPostion = e.target.getBoundingClientRect();
+  // ctx.onclick = (e) => {
+  //   // 获取点击坐标
+  //   const x = e.clientX;
+  //   const y = e.clientY;
+  //   const domPostion = e.target.getBoundingClientRect();
   
-    // 转化为canvas坐标
-    const domx = x - domPostion.left;
-    const domy = y - domPostion.top;
+  //   // 转化为canvas坐标
+  //   const domx = x - domPostion.left;
+  //   const domy = y - domPostion.top;
 
-    const halfWidth = ctx.offsetWidth / 2;
-    const halfHeight = ctx.offsetHeight / 2;
+  //   const halfWidth = ctx.offsetWidth / 2;
+  //   const halfHeight = ctx.offsetHeight / 2;
 
-    // 转化为webgl坐标
-    const clickX = (domx - halfWidth) / halfWidth;
-    const clickY = (halfHeight - domy) / halfHeight;
+  //   // 转化为webgl坐标
+  //   const clickX = (domx - halfWidth) / halfWidth;
+  //   const clickY = (halfHeight - domy) / halfHeight;
 
-    points.push({ clickX, clickY });
+  //   points.push({ clickX, clickY });
 
-    points.forEach((item) => {
-      gl.vertexAttrib2f(aPosition, item.clickX, item.clickY);
-      gl.uniform2f(uColor, item.clickX, item.clickY);
-      gl.drawArrays(gl.POINTS, 0, 1);
-    });
-  };
+  //   points.forEach((item) => {
+  //     gl.vertexAttrib2f(aPosition, item.clickX, item.clickY);
+  //     gl.uniform2f(uColor, item.clickX, item.clickY);
+  //     gl.drawArrays(gl.POINTS, 0, 1);
+  //   });
+  // };
+
+  const points = new Float32Array([
+    -0.5, -0.5,
+    0.5, -0.5,
+    0.0, 0.5,
+  ]);
+
+  const buffer = gl.createBuffer();
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
+  gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW);
+
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+  gl.enableVertexAttribArray(aPosition);
+
+  gl.drawArrays(gl.POINTS, 0, 3);
 
 </script>
