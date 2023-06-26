@@ -150,6 +150,8 @@
 
   gl.enableVertexAttribArray(aPointSize);
 
-  gl.drawArrays(gl.POINTS, 0, 3);
+  // https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/drawArrays
+  // gl.drawArrays(gl.POINTS, 0, 3);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
 
 </script>
